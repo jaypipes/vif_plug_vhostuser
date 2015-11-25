@@ -15,13 +15,17 @@ Utility wrapper around oslo_rootwrap and oslo_concurrency.processutils
 that doesn't use oslo_cfg. Code adapted from nova.utils module.
 """
 
+import logging as std_logging
+import random
 import time
+
+import oslo_rootwrap
 
 from oslo_concurrency import processutils
 from oslo_log import log as logging
 from oslo_utils import strutils
 
-from vif_plug_vhostuser.i18n import _
+from vif_plug_vhostuser.i18n import _, _LI
 
 LOG = logging.getLogger(__name__)
 _ROOTWRAPPER = None
@@ -98,8 +102,8 @@ class RootwrapDaemonHelper(object):
                 # if we want to always log the errors or if this is
                 # the final attempt that failed and we want to log that.
                 if log_errors == processutils.LOG_ALL_ERRORS or (
-                                log_errors == processutils.LOG_FINAL_ERROR and
-                            not attempts):
+                        log_errors == processutils.LOG_FINAL_ERROR and
+                        not attempts):
                     format = _('%(desc)r\ncommand: %(cmd)r\n'
                                'exit code: %(code)r\nstdout: %(stdout)r\n'
                                'stderr: %(stderr)r')
