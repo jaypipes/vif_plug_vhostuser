@@ -45,7 +45,7 @@ class VhostuserPlugin(plugin.PluginBase):
                                           type="dpdkvhostuser")
 
     def unplug(self, vif):
-        if vif.ovs_hybrid_plug:
+        if vif.vhostuser_ovs_plug:
             port_name = os.path.basename(vif.vhostuser_socket)
             linux_net.delete_ovs_vif_port(vif.bridge_name, port_name,
                                           timeout=self.ovs_vsctl_timeout)
